@@ -1,10 +1,12 @@
 package com.example.study_shopping_kotlin.data
 
+import androidx.lifecycle.LiveData
 import com.example.study_shopping_kotlin.domain.ShopListRepository
 import com.example.study_shopping_kotlin.domain.shop_item
 
 object  ShopListRepositoryImp:ShopListRepository {
 
+    private val shopListLD= mutableListOf<List<shop_item>>()
     private val shopList = mutableListOf<shop_item>()
 
     private var autoIncrementId = 0
@@ -16,8 +18,6 @@ object  ShopListRepositoryImp:ShopListRepository {
         }
 
     }
-
-
 
     override fun addShopItemUseCase(shopItem: shop_item) {
         if (shopItem.id == shop_item.UNDENTIFIED_ID){
@@ -43,8 +43,8 @@ object  ShopListRepositoryImp:ShopListRepository {
         } ?: throw RuntimeException("Element with id $shopItemId not found}")
     }
 
-    override fun getShopListUseCase(): List<shop_item> {
-        return shopList.toList()
+    override fun getShopListUseCase(): LiveData<List<shop_item>> {
+        return shopListID
     }
 
 
